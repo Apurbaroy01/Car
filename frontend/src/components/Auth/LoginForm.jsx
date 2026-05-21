@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import { Button, Card, Fieldset, InputGroup, Label, TextField } from "@heroui/react";
 import Link from "next/link";
 import { FaEnvelope, FaEye } from "react-icons/fa";
@@ -9,6 +10,26 @@ import { TbPassword } from "react-icons/tb";
 export default function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        const data = Object.fromEntries(formData.entries());
+        console.log("Form submitted", data);
+
+        const { data: session, error } = await authClient.signIn.email({
+            email: data.email, // required
+            password: data.password, // required
+            rememberMe: true,
+            callbackURL: "/",
+        });
+
+        if (error) {
+            console.error("Login error:", error);
+            alert("Login failed: " + error.message);
+        }
+        if (session.user) {
+            console.log("Login success:", session);
+            alert("Login successful! Welcome back, " + session.user.name + "!");
+        }
 
     };
 
