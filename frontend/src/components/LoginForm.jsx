@@ -1,59 +1,56 @@
 "use client";
-import { useState } from "react";
+import { Button, Card, Fieldset, InputGroup, Label, TextField } from "@heroui/react";
+import Link from "next/link";
+import { FaEnvelope, FaEye } from "react-icons/fa";
+import { TbPassword } from "react-icons/tb";
+
+
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    };
 
-  };
+    return (
+        <div className="w-[400px] space-y-4">
+            <Card className="w-full rounded-md bg-white/80 p-6 shadow-sm">
+                <div className="mb-4 text-center">
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Welcome Back</h1>
+                    <p className="mt-2 text-sm text-slate-500">Sign in to continue to your dashboard.</p>
+                </div>
 
-  return (
-    <form onSubmit={handleSubmit} className="w-full rounded-md bg-white/80 p-6 shadow-sm">
-      <div className="mb-4">
-        <label className="mb-1 block text-sm font-medium text-slate-700">Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-300"
-          placeholder="you@example.com"
-        />
-      </div>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <TextField fullWidth name="email">
+                        <Label>Email address</Label>
+                        <InputGroup fullWidth>
+                            <InputGroup.Prefix>
+                                <FaEnvelope className="size-4 text-muted" />
+                            </InputGroup.Prefix>
+                            <InputGroup.Input placeholder="name@email.com" />
+                        </InputGroup>
+                    </TextField>
+                    <TextField fullWidth name="password">
+                        <Label>Password</Label>
+                        <InputGroup fullWidth>
+                            <InputGroup.Prefix>
+                                <TbPassword className="size-4 text-muted" />
+                            </InputGroup.Prefix>
 
-      <div className="mb-4 relative">
-        <label className="mb-1 block text-sm font-medium text-slate-700">Password</label>
-        <input
-          type={show ? "text" : "password"}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-300"
-          placeholder="Enter your password"
-        />
-        <button type="button" onClick={() => setShow((s) => !s)} className="absolute right-2 top-9 text-sm text-slate-500">
-          {show ? "Hide" : "Show"}
-        </button>
-      </div>
-
-      {error && <p className="mb-3 text-sm text-red-600">{error}</p>}
-
-      <div className="flex items-center justify-between">
-        <button
-          type="submit"
-          className="inline-flex items-center rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-60"
-          disabled={loading}
-        >
-          {loading ? "Signing in..." : "Sign in"}
-        </button>
-        <a href="#" className="text-sm text-slate-600 hover:underline">
-          Forgot?
-        </a>
-      </div>
-    </form>
-  );
+                            <InputGroup.Input placeholder="Enter password" type="password" />
+                            <InputGroup.Suffix>
+                                <FaEye className="size-4 text-muted" />
+                            </InputGroup.Suffix>
+                        </InputGroup>
+                    </TextField>
+                    <Fieldset.Actions className="flex w-full">
+                        <Button className="w-full" type="submit">
+                            Login
+                        </Button>
+                    </Fieldset.Actions>
+                </form>
+                <p className="text-center">I don&apos;t have an account? <Link href="/register" className="text-blue-500 hover:underline">Sign up</Link></p>
+            </Card>
+        </div>
+    );
 }
