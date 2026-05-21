@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import { Button, Card, Fieldset, InputGroup, Label, TextField } from "@heroui/react";
 import Link from "next/link";
 import { FaEnvelope, FaEye, FaUser } from "react-icons/fa";
@@ -8,6 +9,28 @@ export default function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    console.log("Form submitted", data);
+
+    const { data: session, error } = await authClient.signUp.email({
+      name: data.name, // required
+      email: data.email, // required
+      password: data.password, // required
+      callbackURL: "/",
+    });
+
+    if (error) {
+      console.error("Registration error:", error);
+      alert("Registration failed: " + error.message);
+    }
+
+    if (session.user) {
+      console.log("Registration success:", session);
+      alert("Registration successful! Please check your email to verify your account.");
+
+    }
   };
 
   return (
