@@ -25,15 +25,15 @@ const CarDetailsPage = async ({ params }) => {
     }
 
     return (
-        <main className="bg-slate-50 py-14">
+        <main className="bg-slate-50 py-4">
             <div className="mx-auto max-w-6xl px-6">
-                <div className="mb-10 flex flex-col gap-6 rounded-3xl bg-white p-8 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+                <div className="mb-4 flex flex-col gap-3 rounded-3xl bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <p className="text-sm uppercase tracking-[0.3em] text-sky-600">Car detail</p>
-                        <h1 className="mt-3 text-4xl font-bold text-slate-900">
+                        <h1 className="mt-2 text-2xl font-bold text-slate-900">
                             {car.brand} {car.model}
                         </h1>
-                        <p className="mt-3 text-slate-600">{car.category} rental with full details and booking info.</p>
+                        <p className="mt-2 text-slate-600">{car.category} rental with full details and booking info.</p>
                     </div>
                     <Link
                         href="/"
@@ -43,7 +43,7 @@ const CarDetailsPage = async ({ params }) => {
                     </Link>
                 </div>
 
-                <div className="grid gap-8 lg:grid-cols-[1.4fr_0.8fr]">
+                <div className="grid gap-4 lg:grid-cols-[1.4fr_0.8fr]">
                     <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
                         <Image
                             src={car.image}
@@ -52,27 +52,27 @@ const CarDetailsPage = async ({ params }) => {
                             width={500}
                             height={300}
                         />
-                        <div className="p-8">
+                        <div className="p-4">
                             <p className="text-sm text-slate-500">{car.availability}</p>
-                            <h2 className="mt-4 text-3xl font-semibold text-slate-900">
+                            <h2 className="mt-2 text-3xl font-semibold text-slate-900">
                                 {car.brand} {car.model}
                             </h2>
                             <p className="mt-4 text-slate-600 leading-7">{car.description}</p>
 
-                            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                                <div className="rounded-3xl bg-slate-50 p-6">
+                            <div className="mt-8 grid gap-2 sm:grid-cols-2">
+                                <div className="rounded-xl bg-slate-50 p-3">
                                     <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Seats</p>
                                     <p className="mt-2 text-xl font-semibold text-slate-900">{car.seats}</p>
                                 </div>
-                                <div className="rounded-3xl bg-slate-50 p-6">
+                                <div className="rounded-xl bg-slate-50 p-3">
                                     <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Fuel</p>
                                     <p className="mt-2 text-xl font-semibold text-slate-900">{car.fuel}</p>
                                 </div>
-                                <div className="rounded-3xl bg-slate-50 p-6">
+                                <div className="rounded-xl bg-slate-50 p-3">
                                     <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Transmission</p>
                                     <p className="mt-2 text-xl font-semibold text-slate-900">{car.transmission}</p>
                                 </div>
-                                <div className="rounded-3xl bg-slate-50 p-6">
+                                <div className="rounded-xl bg-slate-50 p-3">
                                     <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Location</p>
                                     <p className="mt-2 text-xl font-semibold text-slate-900">{car.location}</p>
                                 </div>
@@ -80,13 +80,13 @@ const CarDetailsPage = async ({ params }) => {
                         </div>
                     </div>
 
-                    <div className="space-y-6">
-                        <div className="rounded-3xl bg-white p-8 shadow-sm">
+                    <div className="space-y-3">
+                        <div className="rounded-3xl bg-white p-4 shadow-sm">
                             <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Pricing</p>
                             <p className="mt-4 text-4xl font-bold text-slate-900">${car.pricePerDay}</p>
                             <p className="mt-2 text-slate-600">per day rental</p>
 
-                            <div className="mt-8 space-y-3 text-slate-700">
+                            <div className="mt-8 space-y-2 text-slate-700">
                                 <p>
                                     <span className="font-semibold">Category:</span> {car.category}
                                 </p>
@@ -98,9 +98,9 @@ const CarDetailsPage = async ({ params }) => {
                                 </p>
                             </div>
 
-                            <div className="mt-8">
+                            <div className="mt-4">
                                 <h3 className="text-lg font-semibold text-slate-900">Top features</h3>
-                                <ul className="mt-4 space-y-3 text-slate-600">
+                                <ul className="mt-2 space-y-3 text-slate-600">
                                     {car.features.map((feature) => (
                                         <li key={feature} className="flex items-center gap-3">
                                             <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-100 text-sky-700">
@@ -113,10 +113,10 @@ const CarDetailsPage = async ({ params }) => {
                             </div>
                         </div>
 
-                        <div className="rounded-3xl bg-white p-8 shadow-sm">
+                        <div className="rounded-3xl bg-white p-4 shadow-sm">
                             <h3 className="text-lg font-semibold text-slate-900">Ready to rent?</h3>
                             <p className="mt-3 text-slate-600">Contact us to reserve this car and get instant confirmation for your trip.</p>
-                            <div className="mt-6 space-y-3">
+                            <div className="mt-3 space-y-2">
                                 <p className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-700">Phone: +880 1711 000 000</p>
                                 <p className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-700">Email: support@carrental.com</p>
                             </div>
