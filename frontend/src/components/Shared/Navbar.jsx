@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 
@@ -9,28 +10,32 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-slate-200/80">
       <div className="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between">
-        <a href="/" className="text-lg font-semibold tracking-tight text-slate-900">
-          Car
-        </a>
+        <Link href="/" className="text-lg font-semibold tracking-tight text-slate-900">
+          CarRental
+        </Link>
 
         <nav className="hidden sm:flex items-center gap-6 text-sm font-medium text-slate-600">
-          <a href="/" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
+          <Link href="/" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
             Home
-          </a>
-          <a href="#about" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
+          </Link>
+          <Link href="#about" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
             About
-          </a>
-          <a href="#services" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
+          </Link>
+          <Link href="#services" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
             Services
-          </a>
-          <a href="#contact" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
+          </Link>
+          <Link href="#contact" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
             Contact
-          </a>
+          </Link>
           <div className="ml-2 flex items-center gap-3">
             {!user ? (
               <>
-                <a href="/login" className="rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">Sign in</a>
-                <a href="/register" className="hidden rounded-md bg-sky-600 px-3 py-2 text-sm font-medium text-white hover:bg-sky-700 sm:inline-block">Sign up</a>
+                <Link href="/login" className="rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
+                  Sign in
+                </Link>
+                <Link href="/register" className="hidden rounded-md bg-sky-600 px-3 py-2 text-sm font-medium text-white hover:bg-sky-700 sm:inline-block">
+                  Sign up
+                </Link>
               </>
             ) : (
               <div className="flex items-center gap-3">
@@ -64,22 +69,26 @@ export default function Navbar() {
       {open && (
         <div className="sm:hidden border-t border-slate-200/80 bg-white/95">
           <div className="px-6 py-4 flex flex-col gap-2">
-            <a href="/" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
+            <Link href="/" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
               Home
-            </a>
-            <a href="#about" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
+            </Link>
+            <Link href="#about" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
               About
-            </a>
-            <a href="#services" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
+            </Link>
+            <Link href="#services" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
               Services
-            </a>
-            <a href="#contact" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
+            </Link>
+            <Link href="#contact" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
               Contact
-            </a>
+            </Link>
             {!user ? (
               <>
-                <a href="/login" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">Sign in</a>
-                <a href="/register" onClick={() => setOpen(false)} className="py-2 rounded-md bg-sky-600 px-3 text-white hover:bg-sky-700">Sign up</a>
+                <Link href="/login" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
+                  Sign in
+                </Link>
+                <Link href="/register" onClick={() => setOpen(false)} className="py-2 rounded-md bg-sky-600 px-3 text-white hover:bg-sky-700">
+                  Sign up
+                </Link>
               </>
             ) : (
               <>
