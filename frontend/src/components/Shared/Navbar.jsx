@@ -1,101 +1,159 @@
 "use client";
+
 import Link from "next/link";
 import { useState } from "react";
 
-
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const user = false; // Replace with actual user state from context or props
+
+  const user = false;
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-slate-200/80">
-      <div className="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between">
-        <Link href="/" className="text-lg font-semibold tracking-tight text-slate-900">
-          CarRental
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-lg shadow-sm">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        
+        {/* Logo */}
+        <Link
+          href="/"
+          className="text-2xl font-bold tracking-tight"
+        >
+          <span className="bg-gradient-to-r from-sky-500 to-blue-700 bg-clip-text text-transparent">
+            CarRental
+          </span>
         </Link>
 
-        <nav className="hidden sm:flex items-center gap-6 text-sm font-medium text-slate-600">
-          <Link href="/" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
-            Home
-          </Link>
-          <Link href="#about" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
-            About
-          </Link>
-          <Link href="#services" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
-            Services
-          </Link>
-          <Link href="#contact" className="px-3 py-2 rounded-md transition hover:bg-slate-100 hover:text-slate-900">
-            Contact
-          </Link>
-          <div className="ml-2 flex items-center gap-3">
+        {/* Desktop Menu */}
+        <nav className="hidden items-center gap-2 md:flex">
+          {["Home", "About", "Services", "Contact"].map((item) => (
+            <Link
+              key={item}
+              href={item === "Home" ? "/" : `#${item.toLowerCase()}`}
+              className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 transition-all duration-200 hover:bg-slate-100 hover:text-sky-600"
+            >
+              {item}
+            </Link>
+          ))}
+
+          <div className="ml-4 flex items-center gap-3">
             {!user ? (
               <>
-                <Link href="/login" className="rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">
-                  Sign in
+                <Link
+                  href="/login"
+                  className="rounded-full border border-slate-300 px-5 py-2 text-sm font-medium text-slate-700 transition hover:border-sky-500 hover:text-sky-600"
+                >
+                  Sign In
                 </Link>
-                <Link href="/register" className="hidden rounded-md bg-sky-600 px-3 py-2 text-sm font-medium text-white hover:bg-sky-700 sm:inline-block">
-                  Sign up
+
+                <Link
+                  href="/register"
+                  className="rounded-full bg-sky-600 px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-sky-700 hover:shadow-lg"
+                >
+                  Get Started
                 </Link>
               </>
             ) : (
               <div className="flex items-center gap-3">
-                <span className="text-sm text-slate-700">Hi, {user.name}</span>
-                <button onClick={() => auth.logout()} className="rounded-md px-3 py-2 text-sm text-rose-600 hover:bg-rose-50">Logout</button>
+                <div className="flex items-center gap-2">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-sky-600 text-sm font-semibold text-white">
+                    A
+                  </div>
+
+                  <span className="text-sm font-medium text-slate-700">
+                    {user.name}
+                  </span>
+                </div>
+
+                <button className="rounded-full border border-rose-200 px-4 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-50">
+                  Logout
+                </button>
               </div>
             )}
           </div>
         </nav>
 
-        <div className="sm:hidden">
-          <button
-            type="button"
-            aria-label="Toggle menu"
-            onClick={() => setOpen((v) => !v)}
-            className="inline-flex items-center justify-center rounded-md p-2 text-slate-700 hover:bg-slate-100"
-          >
-            {open ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
-        </div>
+        {/* Mobile Button */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="rounded-lg p-2 text-slate-700 transition hover:bg-slate-100 md:hidden"
+        >
+          {open ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          )}
+        </button>
       </div>
 
+      {/* Mobile Menu */}
       {open && (
-        <div className="sm:hidden border-t border-slate-200/80 bg-white/95">
-          <div className="px-6 py-4 flex flex-col gap-2">
-            <Link href="/" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
-              Home
-            </Link>
-            <Link href="#about" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
-              About
-            </Link>
-            <Link href="#services" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
-              Services
-            </Link>
-            <Link href="#contact" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
-              Contact
-            </Link>
-            {!user ? (
-              <>
-                <Link href="/login" onClick={() => setOpen(false)} className="py-2 rounded-md text-slate-800 hover:bg-slate-100">
-                  Sign in
-                </Link>
-                <Link href="/register" onClick={() => setOpen(false)} className="py-2 rounded-md bg-sky-600 px-3 text-white hover:bg-sky-700">
-                  Sign up
-                </Link>
-              </>
-            ) : (
-              <>
-                <div className="py-2 text-slate-800">Signed in as <strong>{user.name}</strong></div>
-                <button onClick={() => { setOpen(false); }} className="py-2 rounded-md text-rose-600 hover:bg-rose-50">Logout</button>
-              </>
-            )}
+        <div className="border-t border-slate-200 bg-white md:hidden">
+          <div className="space-y-2 px-6 py-5">
+            {["Home", "About", "Services", "Contact"].map((item) => (
+              <Link
+                key={item}
+                href={item === "Home" ? "/" : `#${item.toLowerCase()}`}
+                onClick={() => setOpen(false)}
+                className="block rounded-lg px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-sky-600"
+              >
+                {item}
+              </Link>
+            ))}
+
+            <div className="mt-4 flex flex-col gap-3">
+              {!user ? (
+                <>
+                  <Link
+                    href="/login"
+                    className="rounded-lg border border-slate-300 px-4 py-3 text-center text-sm font-medium text-slate-700 transition hover:border-sky-500 hover:text-sky-600"
+                  >
+                    Sign In
+                  </Link>
+
+                  <Link
+                    href="/register"
+                    className="rounded-lg bg-sky-600 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-sky-700"
+                  >
+                    Get Started
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <div className="rounded-lg bg-slate-100 px-4 py-3 text-sm font-medium text-slate-700">
+                    Signed in as <strong>{user.name}</strong>
+                  </div>
+
+                  <button className="rounded-lg border border-rose-200 px-4 py-3 text-sm font-medium text-rose-600 transition hover:bg-rose-50">
+                    Logout
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}
