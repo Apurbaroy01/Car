@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import NavLink from "./NavLink";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -11,7 +12,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-lg shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        
+
         {/* Logo */}
         <Link
           href="/"
@@ -24,15 +25,11 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <nav className="hidden items-center gap-2 md:flex">
-          {["Home", "About","Car", "Posts", "Contact"].map((item) => (
-            <Link
-              key={item}
-              href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-              className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 transition-all duration-200 hover:bg-slate-100 hover:text-sky-600"
-            >
-              {item}
-            </Link>
-          ))}
+          <NavLink href={"/"}>Home</NavLink>
+          <NavLink href={"/about"}>About</NavLink>
+          <NavLink href={"/car"}>Car</NavLink>
+          <NavLink href={"/posts"}>Posts</NavLink>
+          <NavLink href={"/contact"}>Contact</NavLink>
 
           <div className="ml-4 flex items-center gap-3">
             {!user ? (
@@ -114,16 +111,11 @@ export default function Navbar() {
       {open && (
         <div className="border-t border-slate-200 bg-white md:hidden">
           <div className="space-y-2 px-6 py-5">
-            {["Home", "About", "Posts", "Contact"].map((item) => (
-              <Link
-                key={item}
-                href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                onClick={() => setOpen(false)}
-                className="block rounded-lg px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-sky-600"
-              >
-                {item}
-              </Link>
-            ))}
+            <NavLink href={"/"}>Home</NavLink>
+            <NavLink href={"/about"}>About</NavLink>
+            <NavLink href={"/car"}>Car</NavLink>
+            <NavLink href={"/posts"}>Posts</NavLink>
+            <NavLink href={"/contact"}>Contact</NavLink>
 
             <div className="mt-4 flex flex-col gap-3">
               {!user ? (
