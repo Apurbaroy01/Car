@@ -21,7 +21,7 @@ export default function PostsPage() {
     <main className="min-h-screen bg-slate-50 py-4">
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
-        <div className="mb-12 flex items-center justify-between gap-6">
+        <div className="mb-12 flex items-center justify-between gap-4">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">Dashboard</p>
             <h1 className="mt-3 text-4xl font-extrabold text-slate-900">Your Posts</h1>
