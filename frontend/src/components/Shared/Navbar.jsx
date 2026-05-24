@@ -3,11 +3,16 @@
 import Link from "next/link";
 import { useState } from "react";
 import NavLink from "./NavLink";
+import { authClient } from "@/lib/auth-client";
 
 export default function Navbar() {
+  const {data, error} = authClient.useSession();
   const [open, setOpen] = useState(false);
 
-  const user = false;
+  console.log("Session Data:", data);
+  console.log("Session Error:", error);
+
+  const user = data?.user || null;
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-lg shadow-sm">
