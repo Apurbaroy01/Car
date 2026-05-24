@@ -6,13 +6,21 @@ import NavLink from "./NavLink";
 import { authClient } from "@/lib/auth-client";
 
 export default function Navbar() {
-  const {data, error} = authClient.useSession();
+  const { data, error } = authClient.useSession();
   const [open, setOpen] = useState(false);
 
   console.log("Session Data:", data);
   console.log("Session Error:", error);
 
   const user = data?.user || null;
+
+  const handleLogout = async () => {
+    try {
+      await authClient.signOut();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-lg shadow-sm">
@@ -65,7 +73,7 @@ export default function Navbar() {
                   </span>
                 </div>
 
-                <button className="rounded-full border border-rose-200 px-4 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-50">
+                <button onClick={handleLogout} className="rounded-full border border-rose-200 px-4 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-50">
                   Logout
                 </button>
               </div>
@@ -145,7 +153,7 @@ export default function Navbar() {
                     Signed in as <strong>{user.name}</strong>
                   </div>
 
-                  <button className="rounded-lg border border-rose-200 px-4 py-3 text-sm font-medium text-rose-600 transition hover:bg-rose-50">
+                  <button onClick={handleLogout} className="rounded-lg border border-rose-200 px-4 py-3 text-sm font-medium text-rose-600 transition hover:bg-rose-50">
                     Logout
                   </button>
                 </>
