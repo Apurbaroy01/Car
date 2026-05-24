@@ -1,36 +1,41 @@
 const express = require('express')
 const cors = require('cors');
+const { default: mongoose } = require('mongoose');
 require('dotenv').config();
 const app = express()
 
 const port = process.env.PORT;
 
-
 app.use(cors());
 app.use(express.json());
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = process.env.MONGODB_URI;
+// Mongoose Connection ==========================================
+const ConnectMongoose = async () => {
+    const MONGO_URI = process.env.MONGODB_URI;
+    try {
+        await mongoose.connect(MONGO_URI);
+        console.log("✅ Mongoose Connected")
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
+    } catch (error) {
+        console.error("❌ Mongoose Error:", error.message)
+    } finally {
+        // await mongoose.connection.close();
     }
-});
+}
 
 async function run() {
     try {
+        await ConnectMongoose();
+        console.log("✅ Connected to MongoDB");
 
-        await client.connect();
-        console.log("You successfully connected to MongoDB!✅");
+        // Routes
+        const addCarRoutes = require("./routes/addCar.route");
+        app.use("/", addCarRoutes);
+
     } catch (error) {
         console.error("Error connecting to MongoDB❌:", error);
     } finally {
-        await client.close();
         console.log("MongoDB connection closed.");
     }
 }

@@ -18,6 +18,7 @@ export default function AddCarForm() {
         description: "",
         availability: "Available now",
         features: "",
+        email: "",
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -30,6 +31,28 @@ export default function AddCarForm() {
     async function onSubmit(e) {
         e.preventDefault();
         setError("");
+
+        const payload = {
+            ...form,
+            features: form.features.split(",").map((f) => f.trim()).filter(Boolean),
+        };
+
+        console.log("Submitting form with payload:", payload);  
+
+        try {
+            setLoading(true);
+            const res = await fetch("http://localhost:5000/add-car", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+            const data = await res.json();
+            console.log("Response from server:", data);
+            setLoading(false);
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+        }
         
     }
 
