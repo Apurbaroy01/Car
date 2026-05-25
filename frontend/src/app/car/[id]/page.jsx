@@ -1,15 +1,26 @@
 import Link from "next/link";
 
 import Image from "next/image";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const CarDetailsPage = async ({ params }) => {
     const { id: carId } = await params;
+
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
 
     let car = [];
 
     try {
         const res = await fetch(`http://localhost:5000/get-car/${carId}`,
-            { cache: "no-store" });
+            {
+                cache: "no-store",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
         if (!res.ok) {
             throw new Error("Failed to fetch car");
@@ -17,7 +28,7 @@ const CarDetailsPage = async ({ params }) => {
 
         car = await res.json();
 
-        console.log("Fetched car:", car);
+
     } catch (error) {
         console.error("Error fetching car:", error);
     }

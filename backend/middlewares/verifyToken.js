@@ -1,15 +1,7 @@
-const express = require("express");
-
-const { addCar, getCar, getCarById } = require("../controllers/addCar.controller");
-
-
-const app = express.Router();
-
-
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!authHeader || !authHeader.startsWith("Bearer")) {
         return res.status(401).json({ message: "Unauthorized" });
     }
     const token = authHeader.split(" ")[1];
@@ -22,9 +14,4 @@ const verifyToken = (req, res, next) => {
     next();
 }
 
-app.post("/add-car", addCar);
-app.get("/get-car", getCar);
-app.get("/get-car/:id",verifyToken, getCarById);
-
-
-module.exports = app;
+module.exports = {verifyToken};

@@ -14,7 +14,7 @@ export default async function CarList() {
 
         const data = await res.json();
         cars = data;
-        console.log("Fetched cars:", cars);
+
     } catch (error) {
         console.error("Error fetching cars:", error);
     }
