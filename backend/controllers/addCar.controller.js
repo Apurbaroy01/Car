@@ -21,4 +21,17 @@ const getCar = async (req, res) => {
         }
 };
 
-module.exports = { addCar, getCar };
+const getCarById = async (req, res) => {
+        try {
+                const { id } = req.params;
+                const car = await Car.findById(id).lean();
+                if (!car) {
+                        return res.status(404).json({ message: "Car not found" });
+                }
+                res.status(200).json(car);
+        } catch (error) {
+                res.status(400).json({ message: error.message });
+        }
+};
+
+module.exports = { addCar, getCar, getCarById };

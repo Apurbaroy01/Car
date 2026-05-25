@@ -1,10 +1,26 @@
 import Link from "next/link";
-import cars from "@/lib/cars";
+
 import Image from "next/image";
 
 const CarDetailsPage = async ({ params }) => {
     const { id: carId } = await params;
-    const car = cars.find((item) => item.id === carId);
+
+    let car = [];
+
+    try {
+        const res = await fetch(`http://localhost:5000/get-car/${carId}`,
+            { cache: "no-store" });
+
+        if (!res.ok) {
+            throw new Error("Failed to fetch car");
+        }
+
+        car = await res.json();
+
+        console.log("Fetched car:", car);
+    } catch (error) {
+        console.error("Error fetching car:", error);
+    }
 
     if (!car) {
         return (
@@ -101,8 +117,8 @@ const CarDetailsPage = async ({ params }) => {
                             <div className="mt-4">
                                 <h3 className="text-lg font-semibold text-slate-900">Top features</h3>
                                 <ul className="mt-2 space-y-3 text-slate-600">
-                                    {car.features.map((feature) => (
-                                        <li key={feature} className="flex items-center gap-3">
+                                    {car.features.map((feature, index) => (
+                                        <li key={index + 1} className="flex items-center gap-3">
                                             <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-100 text-sky-700">
                                                 ✓
                                             </span>
