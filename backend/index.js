@@ -9,7 +9,6 @@ const port = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
-
 // Mongoose Connection ==========================================
 const ConnectMongoose = async () => {
     const MONGO_URI = process.env.MONGODB_URI;

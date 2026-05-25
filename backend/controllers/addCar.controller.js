@@ -23,7 +23,6 @@ const getCar = async (req, res) => {
 };
 
 const getCarById = async (req, res) => {
-        console.log("Received request token:", req.headers.authorization);
         try {
                 const { id } = req.params;
                 const car = await Car.findById(id).lean();
