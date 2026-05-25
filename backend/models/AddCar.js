@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const CarSchema = new mongoose.Schema(
 	{
-		email: { type: String,  default: "apurba@gmail.com" },
+		email: { type: String, required: true },
 		brand: { type: String, required: true},
 		model: { type: String, required: true },
 		category: { type: String },

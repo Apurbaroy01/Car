@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { authClient } from "@/lib/auth-client";
-import { Button, Card, Fieldset, InputGroup, Label, TextField } from "@heroui/react";
+import { Button, Card, Fieldset, InputGroup, Label, Spinner, TextField } from "@heroui/react";
 import Link from "next/link";
 import { FaEnvelope, FaEye } from "react-icons/fa";
 import { TbPassword } from "react-icons/tb";
@@ -67,21 +67,21 @@ export default function LoginForm() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <TextField fullWidth name="email">
                         <Label>Email address</Label>
-                        <InputGroup fullWidth>
+                        <InputGroup fullWidth required>
                             <InputGroup.Prefix>
                                 <FaEnvelope className="size-4 text-muted" />
                             </InputGroup.Prefix>
-                            <InputGroup.Input placeholder="name@email.com" />
+                            <InputGroup.Input placeholder="name@email.com" required type="email" />
                         </InputGroup>
                     </TextField>
                     <TextField fullWidth name="password">
                         <Label>Password</Label>
-                        <InputGroup fullWidth>
+                        <InputGroup fullWidth required>
                             <InputGroup.Prefix>
                                 <TbPassword className="size-4 text-muted" />
                             </InputGroup.Prefix>
 
-                            <InputGroup.Input placeholder="Enter password" type="password" />
+                            <InputGroup.Input placeholder="Enter password" required type="password" />
                             <InputGroup.Suffix>
                                 <FaEye className="size-4 text-muted" />
                             </InputGroup.Suffix>
@@ -89,7 +89,7 @@ export default function LoginForm() {
                     </TextField>
                     <Fieldset.Actions className="flex w-full">
                         <Button className="w-full" type="submit" disabled={isLoading}>
-                            {isLoading ? "Logging in..." : "Login"}
+                            {isLoading ? <Spinner color="success" size="sm" />: "Login"}
                         </Button>
                     </Fieldset.Actions>
                 </form>

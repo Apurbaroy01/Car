@@ -1,6 +1,6 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
-import { Button, Card, Fieldset, InputGroup, Label, TextField } from "@heroui/react";
+import { Button, Card, Fieldset, InputGroup, Label, Spinner, TextField } from "@heroui/react";
 import Link from "next/link";
 import { useState } from "react";
 import { FaEnvelope, FaEye, FaUser } from "react-icons/fa";
@@ -98,7 +98,7 @@ export default function RegisterForm() {
           </TextField>
           <Fieldset.Actions className="flex w-full">
             <Button className="w-full" type="submit" disabled={isLoading}>
-              {isLoading ? "Signing up..." : "Sign up"}
+              {isLoading ? <Spinner color="success" size="sm" /> : "Sign up"}
             </Button>
           </Fieldset.Actions>
         </form>

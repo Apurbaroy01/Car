@@ -39,6 +39,7 @@ export default function AddCarForm() {
 
         const payload = {
             ...form,
+            email: userEmail,
             features: form.features.split(",").map((f) => f.trim()).filter(Boolean),
         };
 
@@ -54,6 +55,28 @@ export default function AddCarForm() {
             const data = await res.json();
             console.log("Response from server:", data);
             setLoading(false);
+
+            if (res.status === 201) {
+                setForm({
+                    brand: "",
+                    model: "",
+                    category: "",
+                    pricePerDay: "",
+                    seats: "",
+                    fuel: "",
+                    transmission: "",
+                    location: "",
+                    image: "",
+                    description: "",
+                    availability: "Available now",
+                    features: "",
+                    email: userEmail,
+                });
+                alert("Car added successfully!");
+            } else {
+                setError(data.message || "Failed to add car");
+                console.error("Error adding car:", data);
+            }
         } catch (error) {
             setError(error.message);
             setLoading(false);
