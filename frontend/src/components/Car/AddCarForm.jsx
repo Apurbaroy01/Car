@@ -2,9 +2,14 @@
 
 import { useState } from "react";
 
-import { Camera, DollarSign, Users, MapPin, List, Settings } from "lucide-react";
+import { Camera, DollarSign, Users, MapPin, List, Settings, Mail } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 export default function AddCarForm() {
+    const { data, isLoading  } = authClient.useSession();
+    const userEmail = data?.user?.email || "";
+    console.log("User email from session:", userEmail);
+
     const [form, setForm] = useState({
         brand: "",
         model: "",
@@ -18,7 +23,7 @@ export default function AddCarForm() {
         description: "",
         availability: "Available now",
         features: "",
-        email: "",
+        email: userEmail,
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -37,7 +42,7 @@ export default function AddCarForm() {
             features: form.features.split(",").map((f) => f.trim()).filter(Boolean),
         };
 
-        console.log("Submitting form with payload:", payload);  
+        console.log("Submitting form with payload:", payload);
 
         try {
             setLoading(true);
@@ -53,7 +58,7 @@ export default function AddCarForm() {
             setError(error.message);
             setLoading(false);
         }
-        
+
     }
 
     return (
@@ -70,7 +75,7 @@ export default function AddCarForm() {
                 </div>
             </div>
 
-            <div className="mt-6 grid gap-6 lg:grid-cols-3">
+            <div className="mt-4 grid gap-6 lg:grid-cols-3">
                 <div className="lg:col-span-2 space-y-4">
                     <div className="grid gap-4 sm:grid-cols-2">
                         <label className="flex w-full flex-col">
@@ -179,6 +184,7 @@ export default function AddCarForm() {
                         <ul className="mt-3 space-y-2 text-sm text-slate-600">
                             <li className="flex items-center gap-2"><List size={16} className="text-sky-500" /> {form.features || "No features added"}</li>
                             <li className="flex items-center gap-2"><MapPin size={16} className="text-sky-500" /> {form.location || "Location"}</li>
+                            <li className="flex items-center gap-2"><Mail size={16} className="text-sky-500" /> {userEmail || "Email"}</li>
                         </ul>
                     </div>
                 </aside>
