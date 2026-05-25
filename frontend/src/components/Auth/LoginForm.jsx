@@ -3,14 +3,16 @@ import React, { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { Button, Card, Fieldset, InputGroup, Label, Spinner, TextField } from "@heroui/react";
 import Link from "next/link";
-import { FaEnvelope, FaEye } from "react-icons/fa";
+import { FaEnvelope } from "react-icons/fa";
 import { TbPassword } from "react-icons/tb";
+import {Eye, EyeSlash} from "@gravity-ui/icons";
 
 
 
 export default function LoginForm() {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -74,6 +76,7 @@ export default function LoginForm() {
                             <InputGroup.Input placeholder="name@email.com" required type="email" />
                         </InputGroup>
                     </TextField>
+
                     <TextField fullWidth name="password">
                         <Label>Password</Label>
                         <InputGroup fullWidth required>
@@ -81,15 +84,24 @@ export default function LoginForm() {
                                 <TbPassword className="size-4 text-muted" />
                             </InputGroup.Prefix>
 
-                            <InputGroup.Input placeholder="Enter password" required type="password" />
+                            <InputGroup.Input placeholder="Enter password" required type={isVisible ? "text" : "password"} />
                             <InputGroup.Suffix>
-                                <FaEye className="size-4 text-muted" />
+                                <Button
+                                    isIconOnly
+                                    aria-label={isVisible ? "Hide password" : "Show password"}
+                                    size="sm"
+                                    variant="ghost"
+                                    onPress={() => setIsVisible(!isVisible)}
+                                >
+                                    {isVisible ? <Eye className="size-4" /> : <EyeSlash className="size-4" />}
+                                </Button>
                             </InputGroup.Suffix>
                         </InputGroup>
                     </TextField>
+
                     <Fieldset.Actions className="flex w-full">
                         <Button className="w-full" type="submit" disabled={isLoading}>
-                            {isLoading ? <Spinner color="success" size="sm" />: "Login"}
+                            {isLoading ? <Spinner color="success" size="sm" /> : "Login"}
                         </Button>
                     </Fieldset.Actions>
                 </form>

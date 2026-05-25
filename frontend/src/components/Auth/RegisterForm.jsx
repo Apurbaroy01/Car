@@ -5,10 +5,13 @@ import Link from "next/link";
 import { useState } from "react";
 import { FaEnvelope, FaEye, FaUser } from "react-icons/fa";
 import { TbPassword } from "react-icons/tb";
+import {Eye, EyeSlash} from "@gravity-ui/icons";
 
 export default function RegisterForm() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,9 +93,17 @@ export default function RegisterForm() {
                 <TbPassword className="size-4 text-muted" />
               </InputGroup.Prefix>
 
-              <InputGroup.Input placeholder="Enter password" type="password" required />
+              <InputGroup.Input placeholder="Enter password" type={isVisible ? "text" : "password"} required />
               <InputGroup.Suffix>
-                <FaEye className="size-4 text-muted" />
+                <Button
+                  isIconOnly
+                  aria-label={isVisible ? "Hide password" : "Show password"}
+                  size="sm"
+                  variant="ghost"
+                  onPress={() => setIsVisible(!isVisible)}
+                >
+                  {isVisible ? <Eye className="size-4" /> : <EyeSlash className="size-4" />}
+                </Button>
               </InputGroup.Suffix>
             </InputGroup>
           </TextField>
