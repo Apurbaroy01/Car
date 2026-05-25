@@ -42,7 +42,7 @@ const CarCard = ({ car }) => {
                         <p className="text-2xl font-bold text-slate-900">${car.pricePerDay}</p>
                     </div>
                     <Link
-                        href={`/car/${car.id}`}
+                        href={`/car/${car._id}`}
                         className="rounded-full bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-700"
                     >
                         Details

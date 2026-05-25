@@ -1,9 +1,23 @@
-import Link from "next/link";
-import cars from "@/lib/cars";
-import Image from "next/image";
+
 import CarCard from "./CarCard";
 
-export default function CarList() {
+export default async function CarList() {
+    let cars = [];
+
+    try {
+        const res = await fetch("http://localhost:5000/get-car",
+            { cache: "no-store" });
+
+        if (!res.ok) {
+            throw new Error("Failed to fetch cars");
+        }
+
+        const data = await res.json();
+        cars = data;
+        console.log("Fetched cars:", cars);
+    } catch (error) {
+        console.error("Error fetching cars:", error);
+    }
     return (
         <section className="bg-slate-50 py-14">
             <div className="mx-auto max-w-7xl px-6">
@@ -19,11 +33,17 @@ export default function CarList() {
                     </p>
                 </div>
 
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {cars.map((car) => (
-                        <CarCard key={car.id} car={car} />
-                    ))}
-                </div>
+                {cars.length > 0 ? (
+                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        {cars.map((car) => (
+                            <CarCard key={car._id} car={car} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="rounded-3xl border border-dashed border-slate-300 bg-white p-10 text-center text-slate-600">
+                        No cars available right now. Please try again later.
+                    </div>
+                )}
             </div>
         </section>
     );
