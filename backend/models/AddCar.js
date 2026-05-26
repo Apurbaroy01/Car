@@ -17,6 +17,8 @@ const CarSchema = new mongoose.Schema(
 		availability: { type: String, default: 'Available now',  },
 		features: { type: [String], default: [] },
 		rating: { type: Number, min: 0, max: 5, default: 0 },
+		views: { type: Number, default: 0 },
+		status: { type: String, default: 'Available' },
 	},
 	{
 		timestamps: true,
@@ -32,6 +34,7 @@ CarSchema.index({ brand: 'text', model: 'text' });
 CarSchema.index({ pricePerDay: 1 });
 CarSchema.index({ category: 1 });
 CarSchema.index({ location: 1 });
+CarSchema.index({ views: 1 });
 
 
 CarSchema.index({ email: 1 });

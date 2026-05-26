@@ -7,12 +7,18 @@ import { headers } from "next/headers";
 const CarDetailsPage = async ({ params }) => {
     const { id: carId } = await params;
 
+     // views count increase
+    await fetch(`http://localhost:5000/cars/${carId}/views`, {
+        method: "PATCH",
+        cache: "no-store",
+    });
+
+
     const { token } = await auth.api.getToken({
         headers: await headers()
     })
-
+    
     let car = [];
-
     try {
         const res = await fetch(`http://localhost:5000/get-car/${carId}`,
             {

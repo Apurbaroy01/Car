@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Eye, FileText, TrendingUp, Plus } from "lucide-react";
-import posts from "@/lib/posts";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
@@ -9,12 +8,15 @@ export default async function PostsPage() {
   const session = await auth.api.getSession({
     headers: await headers() // you need to pass the headers object.
   });
-
   const userId = session?.user?.id;
 
   const { token } = await auth.api.getToken({
     headers: await headers()
   })
+
+  let cars = [];
+  let totalViews = 0;
+  let totalPosts = 0;
 
   try {
     const res = await fetch(`http://localhost:5000/my-posts/${userId}`,
@@ -25,15 +27,14 @@ export default async function PostsPage() {
         }
       });
     const data = await res.json();
-    console.log("Fetched posts data:", data);
+    cars = data.cars;
+    totalViews = data.totalViews;
+    totalPosts = data.totalPosts;
+
+    console.log("Fetched posts data:",  totalViews, totalPosts, cars);
   } catch (error) {
     console.error("Error fetching posts:", error);
   }
-
-  const totalPosts = posts.length;
-  const publishedPosts = posts.filter((p) => p.status === "Published").length;
-  const totalViews = posts.reduce((sum, p) => sum + p.views, 0);
-  const totalBookings = posts.reduce((sum, p) => sum + p.bookings, 0);
 
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString("en-US", {
@@ -81,7 +82,7 @@ export default async function PostsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-600">Published</p>
-                <p className="mt-2 text-3xl font-extrabold text-slate-900">{publishedPosts}</p>
+                <p className="mt-2 text-3xl font-extrabold text-slate-900">{0}</p>
               </div>
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <TrendingUp className="text-green-600" size={24} />
@@ -105,7 +106,7 @@ export default async function PostsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-slate-600">Total Bookings</p>
-                <p className="mt-2 text-3xl font-extrabold text-slate-900">{totalBookings}</p>
+                <p className="mt-2 text-3xl font-extrabold text-slate-900">{0}</p>
               </div>
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-rose-100">
                 <TrendingUp className="text-rose-600" size={24} />
@@ -136,8 +137,8 @@ export default async function PostsPage() {
               </thead>
 
               <tbody>
-                {posts.map((post) => (
-                  <tr key={post.id} className="border-b border-slate-100 transition hover:bg-slate-50">
+                {cars.map((post) => (
+                  <tr key={post._id} className="border-b border-slate-100 transition hover:bg-slate-50">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <Image
@@ -171,7 +172,7 @@ export default async function PostsPage() {
                           : "bg-amber-100 text-amber-700"
                           }`}
                       >
-                        {post.status === "Published" ? "✓" : "–"} {post.status}
+                        {post.status === "Available" ? "✓" : "–"} {post.status}
                       </span>
                     </td>
 
