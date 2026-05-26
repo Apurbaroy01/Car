@@ -2,8 +2,39 @@ import Link from "next/link";
 import Image from "next/image";
 import { Eye, FileText, TrendingUp, Plus } from "lucide-react";
 import posts from "@/lib/posts";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-export default function PostsPage() {
+export default async function PostsPage() {
+  const session = await auth.api.getSession({
+    headers: await headers() // you need to pass the headers object.
+  });
+
+  const userId = session?.user?.id;
+  console.log("User ID from session:", userId);
+
+  const { token } = await auth.api.getToken({
+    headers: await headers()
+  })
+
+  try {
+    const res = await fetch(`http://localhost:5000/my-posts/${userId}`,
+      {
+        cache: "no-store",
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      });
+
+    // if (!res.ok) {
+    //   throw new Error("Failed to fetch posts");
+    // }
+
+    const data = await res.json();
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+  }
+
   const totalPosts = posts.length;
   const publishedPosts = posts.filter((p) => p.status === "Published").length;
   const totalViews = posts.reduce((sum, p) => sum + p.views, 0);
@@ -140,11 +171,10 @@ export default function PostsPage() {
 
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${
-                          post.status === "Published"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-amber-100 text-amber-700"
-                        }`}
+                        className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${post.status === "Published"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-amber-100 text-amber-700"
+                          }`}
                       >
                         {post.status === "Published" ? "✓" : "–"} {post.status}
                       </span>

@@ -12,7 +12,7 @@ const verifyToken = async (req, res, next) => {
         return res.status(401).json({ message: "Unauthorized" });
     }
     const token = authHeader.split(" ")[1];
-    console.log("Extractedd token:", token);
+    // console.log("Extractedd token:", token);
 
     if (!token) {
         return res.status(401).json({ message: "invalid token" });

@@ -6,11 +6,14 @@ import NavLink from "./NavLink";
 import { authClient } from "@/lib/auth-client";
 
 export default function Navbar() {
-  const { data, error } = authClient.useSession();
+  const { data } = authClient.useSession();
   const [open, setOpen] = useState(false);
 
   console.log("Session Data:", data);
-  console.log("Session Error:", error);
+
+  if (!data) {
+    return null;
+  }
 
   const user = data?.user || null;
 
@@ -41,8 +44,9 @@ export default function Navbar() {
           <NavLink href={"/"}>Home</NavLink>
           <NavLink href={"/about"}>About</NavLink>
           <NavLink href={"/car"}>Car</NavLink>
-          <NavLink href={"/posts"}>Posts</NavLink>
+          <NavLink href={"/posts"}>My Posts</NavLink>
           <NavLink href={"/contact"}>Contact</NavLink>
+          <NavLink href={"/car/new"}>Add Car</NavLink>
 
           <div className="ml-4 flex items-center gap-3">
             {!user ? (
