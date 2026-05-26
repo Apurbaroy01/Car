@@ -1,6 +1,30 @@
 
 import CarCard from "@/components/Car/CarCard";
 
+export const metadata = {
+    title: "Car Rentals | Rent a Car for Trips in Bangladesh",
+    description: "Discover premium rental cars with full details, transparent pricing, and instant booking options. Find the perfect vehicle for business trips, family outings, and weekend escapes.",
+    keywords: [
+        "car rental",
+        "rent a car",
+        "Bangladesh car hire",
+        "rental cars",
+        "travel cars",
+        "car booking"
+    ],
+    robots: {
+        index: true,
+        follow: true,
+    },
+    openGraph: {
+        title: "Car Rentals | Rent a Car for Trips in Bangladesh",
+        description: "Discover premium rental cars with full details, transparent pricing, and instant booking options.",
+        type: "website",
+        locale: "en_US",
+        siteName: "Car Rental Service"
+    }
+};
+
 const CarPage = async () => {
     let cars = [];
 
@@ -26,9 +50,9 @@ const CarPage = async () => {
                     <p className="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">
                         Fleet Showcase
                     </p>
-                    <h2 className="mt-4 text-4xl font-bold text-slate-900 sm:text-5xl">
+                    <h1 className="mt-4 text-4xl font-bold text-slate-900 sm:text-5xl">
                         Rent the perfect car for every trip
-                    </h2>
+                    </h1>
                     <p className="mx-auto mt-4 max-w-2xl text-base text-slate-600">
                         Browse our rental cars with full details, clear pricing, and instant booking links.
                     </p>
