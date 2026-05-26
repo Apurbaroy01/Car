@@ -31,7 +31,7 @@ export default async function PostsPage() {
     totalViews = data.totalViews;
     totalPosts = data.totalPosts;
 
-    console.log("Fetched posts data:",  totalViews, totalPosts, cars);
+    console.log("Fetched posts data:",  data);
   } catch (error) {
     console.error("Error fetching posts:", error);
   }
