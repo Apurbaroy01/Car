@@ -11,7 +11,6 @@ export default async function PostsPage() {
   });
 
   const userId = session?.user?.id;
-  console.log("User ID from session:", userId);
 
   const { token } = await auth.api.getToken({
     headers: await headers()
@@ -25,12 +24,8 @@ export default async function PostsPage() {
           authorization: `Bearer ${token}`
         }
       });
-
-    // if (!res.ok) {
-    //   throw new Error("Failed to fetch posts");
-    // }
-
     const data = await res.json();
+    console.log("Fetched posts data:", data);
   } catch (error) {
     console.error("Error fetching posts:", error);
   }

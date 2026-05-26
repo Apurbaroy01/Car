@@ -3,13 +3,20 @@ const Car = require("../models/AddCar");
 
 
 const addCar = async (req, res) => {
-        const userId = req.token.sub;
+        const userId = req.token;
         console.log("User ID from token:", userId);
         
         try {
                 const data = req.body;
                 console.log("Parsed data:", data);
-                const newCar = await Car.create(data);
+
+                const payload = {
+                        ...data,
+                        owner: userId.id,
+                        email: userId.email
+                };
+
+                const newCar = await Car.create(payload);
                 res.status(201).json(newCar);
         } catch (error) {
                 res.status(400).json({ message: error.message });

@@ -1,6 +1,12 @@
 import AddCarForm from "@/components/Car/AddCarForm";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-export default function NewCarPage() {
+export default async function NewCarPage() {
+  const { token } = await auth.api.getToken({
+    headers: await headers()
+  })
+  console.log("Token in NewCarPage:", token);
   return (
     <main className="min-h-screen bg-slate-50 py-4">
       <div className="mx-auto max-w-5xl px-6">
@@ -10,7 +16,7 @@ export default function NewCarPage() {
           <p className="mt-2 text-slate-600">Fill the form below to add a car to the rental fleet.</p>
         </div>
 
-        <AddCarForm />
+        <AddCarForm token={token} />
       </div>
     </main>
   );

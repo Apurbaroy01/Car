@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Camera, DollarSign, Users, MapPin, List, Settings, Mail } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
+
 
 const buildFeatures = (features = "") =>
     features
@@ -12,10 +12,7 @@ const buildFeatures = (features = "") =>
         .map((feature) => feature.trim())
         .filter(Boolean);
 
-const AddCarForm = () => {
-    const { data } = authClient.useSession();
-    const userEmail = data?.user?.email || "";
-
+const AddCarForm = ({token}) => {
     const {
         register,
         handleSubmit,
@@ -29,14 +26,8 @@ const AddCarForm = () => {
     const onSubmit = async (values) => {
         setError("");
 
-        if (!userEmail) {
-            setError("You must be logged in to add a car.");
-            return;
-        }
-
         const payload = {
             ...values,
-            email: userEmail,
             features: buildFeatures(values.features),
         };
 
@@ -45,7 +36,10 @@ const AddCarForm = () => {
         try {
             const response = await fetch("http://localhost:5000/add-car", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify(payload),
             });
 
@@ -232,7 +226,7 @@ const AddCarForm = () => {
                         <ul className="mt-3 space-y-2 text-sm text-slate-600">
                             <li className="flex items-center gap-2"><List size={16} className="text-sky-500" /> No features added</li>
                             <li className="flex items-center gap-2"><MapPin size={16} className="text-sky-500" /> Location</li>
-                            <li className="flex items-center gap-2"><Mail size={16} className="text-sky-500" /> {userEmail || "Email"}</li>
+                            <li className="flex items-center gap-2"><Mail size={16} className="text-sky-500" /> {"Email"}</li>
                         </ul>
                     </div>
                 </aside>

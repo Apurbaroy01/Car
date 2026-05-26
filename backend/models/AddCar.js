@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const CarSchema = new mongoose.Schema(
 	{
 		email: { type: String, required: true },
+		owner: { type: String, required: true },
 		brand: { type: String, required: true},
 		model: { type: String, required: true },
 		category: { type: String },
