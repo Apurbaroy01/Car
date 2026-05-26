@@ -6,7 +6,7 @@ const { verifyToken } = require("../middlewares/verifyToken");
 const app = express.Router();
 
 
-app.post("/add-car", addCar);
+app.post("/add-car",verifyToken, addCar);
 app.get("/get-car", getCar);
 app.get("/get-car/:id", verifyToken, getCarById);
 

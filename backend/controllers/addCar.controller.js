@@ -3,7 +3,9 @@ const Car = require("../models/AddCar");
 
 
 const addCar = async (req, res) => {
-
+        const userId = req.token.sub;
+        console.log("User ID from token:", userId);
+        
         try {
                 const data = req.body;
                 console.log("Parsed data:", data);
