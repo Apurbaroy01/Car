@@ -17,6 +17,7 @@ export default async function PostsPage() {
   let cars = [];
   let totalViews = 0;
   let totalPosts = 0;
+  let Available = 0;
 
   try {
     const res = await fetch(`http://localhost:5000/my-posts/${userId}`,
@@ -30,6 +31,7 @@ export default async function PostsPage() {
     cars = data.cars;
     totalViews = data.totalViews;
     totalPosts = data.totalPosts;
+    Available = data.Available;
 
     console.log("Fetched posts data:",  data);
   } catch (error) {
@@ -81,8 +83,8 @@ export default async function PostsPage() {
           <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-600">Published</p>
-                <p className="mt-2 text-3xl font-extrabold text-slate-900">{0}</p>
+                <p className="text-sm font-medium text-slate-600">Available</p>
+                <p className="mt-2 text-3xl font-extrabold text-slate-900">{Available}</p>
               </div>
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                 <TrendingUp className="text-green-600" size={24} />

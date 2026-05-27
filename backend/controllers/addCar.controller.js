@@ -46,20 +46,14 @@ const getCarById = async (req, res) => {
 };
 
 const getmyposts = async (req, res) => {
-
         try {
                 const userId = req.params.userId;
-                console.log("User ID from params:", userId);
-                console.log("Token payload:", req.token);
 
-                // all cars
+                // get all cars
                 const cars = await Car.find({ owner: userId }).lean();
-                if (!cars) {
-                        return res.status(404).json({ message: "Car not found" });
-                }
 
-                // total views aggregation
-                const totalViewsResult = await Car.aggregate([
+                // stats aggregation
+                const statsResult = await Car.aggregate([
                         {
                                 $match: {
                                         owner: userId
@@ -68,23 +62,58 @@ const getmyposts = async (req, res) => {
                         {
                                 $group: {
                                         _id: null,
+
                                         totalViews: {
                                                 $sum: "$views"
+                                        },
+
+                                        Available: {
+                                                $sum: {
+                                                        $cond: [
+                                                                { $eq: ["$status", "Available"] },
+                                                                1,
+                                                                0
+                                                        ]
+                                                }
+                                        },
+
+                                        NotAvailable: {
+                                                $sum: {
+                                                        $cond: [
+                                                                { $eq: ["$status", "Not Available"] },
+                                                                1,
+                                                                0
+                                                        ]
+                                                }
+                                        },
+
+                                        totalPosts: {
+                                                $sum: 1
                                         }
                                 }
                         }
-
                 ]);
-                const totalViews = totalViewsResult[0]?.totalViews || 0;
-                // total posts
-                const totalPosts = cars.length;
 
+                const stats = statsResult[0] || {
+                        totalViews: 0,
+                        Available: 0,
+                        NotAvailable: 0,
+                        totalPosts: 0
+                };
 
-                res.status(200).json({ success: true, totalViews, totalPosts, cars });
+                res.status(200).json({
+                        success: true,
+                        ...stats,
+                        cars
+                });
 
         } catch (error) {
                 console.error("Error fetching user's cars:", error);
-                res.status(400).json({ message: error.message });
+
+                res.status(500).json({
+                        success: false,
+                        message: error.message
+                });
         }
 };
 
